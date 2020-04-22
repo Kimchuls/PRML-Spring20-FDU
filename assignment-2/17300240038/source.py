@@ -1,7 +1,7 @@
 import argparse
 
 from handout import *
-from YTools.experiment_helper.logger import Logger 
+from handout.logger import Logger 
 
 C = argparse.ArgumentParser()
 C.add_argument("--d" , type = int , default = 32)
