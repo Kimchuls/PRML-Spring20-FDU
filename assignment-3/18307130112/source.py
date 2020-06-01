@@ -30,17 +30,11 @@ class GMM():
                     self.cov[j] += np.dot((dataset[l].reshape(1, self.dims) - self.mean[j]).T,(dataset[l] - self.mean[j]).reshape(1, self.dims)) * posterior[l, j]
                 self.cov[j] = self.cov[j] / nextp[j]
             #print(i)
-
-            if(i % 12 == 0):
+            if(i % 4 == 0):
                 predict_k = np.argmax(posterior, axis = 1)
                 plt.scatter(dataset[:, 0], dataset[:, 1], c = predict_k, marker = '.')
-                print(i / 12 + 1)
-                plt.subplot(5, 5, i / 12 + 1)
-
-        '''
-        predict_k = np.argmax(posterior, axis=1)
-        plt.scatter(dataset[:, 0], dataset[:, 1], c=predict_k, marker='.')
-        '''
+                print(i / 4 + 1)
+                plt.subplot(5, 5, i / 4 + 1)
 
 def gaussian_distribution(mean, cov, size):
     gauss1 = np.random.multivariate_normal(mean[0], cov[0], size[0])
@@ -59,7 +53,7 @@ def gaussian_distribution(mean, cov, size):
     dataset = dataset[randomset]
     with open('dataset.data', 'w') as file:
         for i in range(length):
-            file.write(str(dataset[i][0]) + ' ' + str(dataset[i][1]) + '\n')
+            file.write(str(dataset[i][0])+' '+str(dataset[i][1])+'\n')
 
 
 def readfile():
@@ -80,6 +74,6 @@ if __name__ == '__main__':
     size = np.array([170, 170, 170])
     gaussian_distribution(mean, cov, size)
     dataset = readfile()
-    model = GMM(k=4, dims=2, dataset=dataset, length=np.sum(size))
-    model.EM(dataset, 300)
+    model = GMM(k=3, dims=2, dataset=dataset, length=np.sum(size))
+    model.EM(dataset, 100)
     plt.show()
